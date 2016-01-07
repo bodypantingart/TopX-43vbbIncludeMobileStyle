@@ -1,0 +1,48 @@
+.topxwrapper
+{
+	display: block;
+	border: 0;
+	margin-bottom: 5px;
+}
+h3.topxtitle
+{
+	padding: 5px 10px;
+	margin: 0;
+	background-color: #E5E7E9;
+	color: #676767;
+	display: block;
+	font-size: 13px;
+}
+.topxwrapper .topxbit
+{
+	padding: 0;
+	margin: 0;
+	background-color: whiteSmoke;
+	color: #393939;
+	border: 0;
+	display: block;
+	border-bottom: 1px solid #ECECEC;
+	border-top: 1px solid white;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 99%;
+}
+.topxwrapper .topxbit a
+{
+	color: #393939;
+	display: block;
+	max-width: 100%;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding: 4px 4px 4px 20px;
+	text-decoration: none;
+	background: url(../vtlai_img/topx_new_post.png) no-repeat 4px center;
+}
+.topxwrapper .topxbit a:hover
+{
+	background-color: #72AEEC;
+	color: #FFF;
+}
+

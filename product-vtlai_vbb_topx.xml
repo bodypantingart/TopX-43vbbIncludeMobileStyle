@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<product productid="vtlai_vbb_topx" active="1">
+	<title>vt.Lai VBB TopX 4.3</title>
+	<description>Mod thống kê by Vũ Thanh Lai-SinhVienIT.Net</description>
+	<version>4.3</version>
+	<url>http://sinhvienit.net/@forum/</url>
+	<versioncheckurl>http://sinhvienit.net/@forum/</versioncheckurl>
+	<dependencies>
+	</dependencies>
+	<codes>
+	</codes>
+	<templates>
+		<template name="vtlai_topx_main" templatetype="template" date="0" username="" version=""><![CDATA[
+<div class="vtlaitopx">
+	<div class="topx" id="vtlai_topx" {vb:raw defcss}>
+		<h2 class="title">Đang thảo luận</h2>
+		<div class="tab" {vb:raw defwidth}>
+			<a class="active vtlai_topx_tabitem" href="#all">Tất cả</a>
+			{vb:raw tabs}
+			<a title="Cập nhật lại thống kê" id="vtlai_topx_status" class="vtlai_loading"></a>
+			<br class="clear" />
+		</div>
+		<table class="content" {vb:raw defwidth}>
+			<thead id="topx_smallhead" {vb:raw headdisplay.small}>
+				<th>Tên đề tài</th>
+				<th>Người gửi</th>
+				<th>Chuyên mục</th>
+			</thead>
+			<thead id="topx_bighead" {vb:raw headdisplay.large}>
+				<th>Tên đề tài</th>
+				<th>Ngày, giờ</th>
+				<th class="views">Lần đọc</th>
+				<th class="replycount">Trả lời</th>
+				<th>Người gửi</th>
+				<th>Chuyên mục</th>
+			</thead>
+			<tbody id="vtlai_topx_list">
+				<tr>
+					<td colspan="3"> Đang tải dữ liệu ...</td>
+				</tr>
+			</tbody>
+		   
+		</table>
+	</div>
+	<div class="largebanner" {vb:raw rightboxcss}>
+		{vb:raw vboptions.vtlai_topx_rightbox_content}
+	</div>
+	<br class="clear" />
+</div>
+	]]></template>
+	<template name="vtlai_topx_tabbit" templatetype="template" date="0" username="" version=""><![CDATA[
+	<a href="#{vb:raw forumids}" class="vtlai_topx_tabitem">{vb:raw tabname}</a>
+	]]></template>
+	<template name="vtlai_topx_postbit" templatetype="template" date="0" username="" version=""><![CDATA[
+	<tr>
+		<td class="topx_col_title topx_small"><a class="topxtitle" title="{vb:raw thread.title}" href="{vb:raw thread.link}">{vb:raw thread.title}</a></td>
+		<td class="topx_col_poster topx_small"><a class="topxlastposter" title="{vb:raw thread.lastposter}" href="{vb:raw thread.ulink}">{vb:raw thread.musername}</a></td>
+		<td class="topx_col_forum topx_small"><a class="topxforum" title="{vb:raw thread.ftitle}" href="{vb:raw thread.flink}">{vb:raw thread.ftitle}</a></td>
+	</tr>
+	]]></template>
+	<template name="vtlai_topx_postbit_large" templatetype="template" date="0" username="" version=""><![CDATA[
+	<tr>
+		<td class="topx_col_title topx_large"><a class="topxtitle" title="{vb:raw thread.title}" href="{vb:raw thread.link}">{vb:raw thread.title}</a></td>
+		<td class="topx_col_posttime topx_large posttime">{vb:raw thread.detailtime}</td>
+		<td class="topx_col_views topx_large views">{vb:raw thread.views}</td>
+		<td class="topx_col_reply topx_large replycount">{vb:raw thread.replycount}</td>
+		<td class="topx_col_poster topx_large"><a class="topxlastposter" title="{vb:raw thread.lastposter}" href="{vb:raw thread.ulink}">{vb:raw thread.musername}</a></td>
+		<td class="topx_col_forum topx_large"><a class="topxforum" title="{vb:raw thread.ftitle}" href="{vb:raw thread.flink}">{vb:raw thread.ftitle}</a></td>
+	</tr>
+	]]></template>
+	<template name="vtlai_topx_mobile_main" templatetype="template" date="0" username="" version=""><![CDATA[
+	<div class="topxwrapper">
+	<h3 class="topxtitle">Bài viết mới nhất</h3>
+	{vb:raw postbit}
+	</div>
+	]]></template>
+	<template name="vtlai_topx_mobile_bit" templatetype="template" date="0" username="" version=""><![CDATA[
+<div class="topxbit"><a href="{vb:link thread {vb:raw thread}}" title="{vb:raw thread.title}">{vb:raw thread.title}</a></div>
+	]]></template>
+	</templates>
+	<stylevardfns>
+	</stylevardfns>
+	<stylevars>
+	</stylevars>
+	<plugins>
+		<plugin active="1" executionorder="5">
+			<title>vt.Lai - Cache Template</title>
+			<hookname>cache_templates</hookname>
+			<phpcode><![CDATA[global $vbulletin;
+				if(!is_array($cache))
+					$cache=array();
+				$cache = array_merge($cache, array('vtlai_topx_main',
+													'vtlai_topx_tabbit',
+													'vtlai_topx_tabbit_large',
+													'vtlai_topx_postbit',
+													'vtlai_topx_mobile_main',
+													'vtlai_topx_mobile_bit'
+													));
+			]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>vt.Lai - Insert TopX To FORUMHOME</title>
+			<hookname>forumhome_complete</hookname>
+			<phpcode><![CDATA[
+			if(!$show['search_engine'])
+			{
+				if(STYLEID==$vbulletin->options['vtlai_topx_mobilestyleid'] || $style['styleid']==$vbulletin->options['vtlai_topx_mobilestyleid'] || $vbulletin->session->vars['styleid']==$vbulletin->options['vtlai_topx_mobilestyleid'])
+				{
+					$limit=intval($vbulletin->options['vtlai_topx_mobile_count']);
+					if(!$limit)
+						$limit=10;
+					$blackforum=&$vbulletin->options['vtlai_topx_blackforum'];
+					if($blackforum)
+					{
+						$blackforum="AND t.forumid NOT IN ($blackforum)";
+					}
+					
+					$sql="SELECT t.* FROM ".TABLE_PREFIX."thread t  WHERE t.visible=1 $blackforum ORDER BY lastpost DESC LIMIT $limit";
+					$result=$vbulletin->db->query($sql);
+					if($vbulletin->db->num_rows($result))
+					{
+						$tem=vB_Template::create('vtlai_topx_mobile_bit');
+						$postbit='';
+						while($thread=$db->fetch_array($result))
+						{
+							$thread['ftitle']=strip_tags($vbulletin->forumcache[$thread['forumid']]['title']);
+							$thread['detailtime']=vbdate('h:m:i A',$thread['lastpost']);
+							$tem->register('thread',$thread);
+							$postbit.=$tem->render();
+						}
+						$tem=vB_Template::create('vtlai_topx_mobile_main');
+						$tem->register('postbit',$postbit);
+						$ad_location['global_below_navbar'].=$tem->render();
+						
+					}
+					$headinclude.=PHP_EOL.'<link rel="stylesheet" type="text/css" href="vtlai_css/vtlai_topx_mobile.css" />';
+				}
+				else
+				{
+					$tabarr=preg_split('(\r\n|\n)',$vbulletin->options['vtlai_topx_tabs']);
+					if($tabarr)
+					{
+						$tabs='';
+						$tem=vB_Template::create('vtlai_topx_tabbit');
+						foreach($tabarr as &$tab)
+						{
+							if($tab[0]=='#')
+								continue;
+							$tabx=explode('|',trim($tab));
+							$tabname=$tabx[0];
+							$forumids=$tabx[1];
+							$tem->register('tabname',$tabname);
+							$tem->register('forumids',$forumids);
+							$tabs.=$tem->render();
+						}
+						unset($tem);
+					}
+					$tem=vB_Template::create('vtlai_topx_main');
+					$tem->register('tabs',$tabs);
+					if($vbulletin->options['vtlai_topx_rightbox_enable'])
+					{
+						$headdisplay['small']='';
+						$headdisplay['large']=' style="display:none" ';
+						$defaultsize='small';
+						
+					}
+					else
+					{
+						$headdisplay['small']=' style="display:none" ';
+						$headdisplay['large']='';
+						$defaultsize='big';
+						$defcss=' style="width: auto;float:none;"';
+						$defwidth=' style="width: 100%;"';
+						$rightboxcss=' style="display:none"';
+					}
+					$tem->register('headdisplay',$headdisplay);
+					$tem->register('defcss',$defcss);
+					$tem->register('defwidth',$defwidth);
+					$tem->register('rightboxcss',$rightboxcss);
+					$ad_location['vtlai_topx']=$tem->render();
+					unset($tem);
+					$requestfile='vtlai_topx.php';
+					$headinclude.=PHP_EOL.'<link rel="stylesheet" type="text/css" href="vtlai_css/vtlai_topx.css" />';
+					$headinclude.=PHP_EOL.'<script type="text/javascript">
+	<!--
+		var TOPX_RELOADTIME='.$vbulletin->options['vtlai_topx_reloadtime'].';
+		var TOPX_DEFAULTSIZE=\''.$defaultsize.'\';
+		var TOPX_CACHESYSTEM=\''.$vbulletin->options['vtlai_topx_cachesystem'].'\';
+		var TOPX_COOKIEPREFIX=\''.COOKIE_PREFIX.'\';
+		if(typeof jQuery=="undefined")
+			document.write("<script src=\\"vtlai_js/jquery-1.8.0.min.js\\"></script>");
+	-->
+	</script>';
+					$headinclude.=PHP_EOL.'<script type="text/javascript" src="vtlai_js/vtlai_topx.js"></script>';
+				}
+				
+			}
+			]]></phpcode>
+		</plugin>
+	</plugins>
+	<phrases>
+		<phrasetype name="vBulletin Settings" fieldname="vbsettings">
+			<phrase name="setting_vtlai_topx_title_desc" date="0" username="" version=""><![CDATA[Tiêu đề của khung thống kê<br>Biến chèn vào nơi hiện TopX là: {vb:raw ad_location.vtlai_topx}]]></phrase>
+			<phrase name="setting_vtlai_topx_title_title" date="0" username="" version=""><![CDATA[TopX Title]]></phrase>
+			<phrase name="setting_vtlai_topx_count_desc" date="0" username="" version=""><![CDATA[Số kết quả hiển thị khi chưa mở rộng TopX]]></phrase>
+			<phrase name="setting_vtlai_topx_count_title" date="0" username="" version=""><![CDATA[Result Count]]></phrase>
+			<phrase name="setting_vtlai_topx_count_large_desc" date="0" username="" version=""><![CDATA[Số kết quả hiển thị khi mở rộng TopX]]></phrase>
+			<phrase name="setting_vtlai_topx_count_large_title" date="0" username="" version=""><![CDATA[Result Count Large]]></phrase>
+			<phrase name="setting_vtlai_topx_blackforum_desc" date="0" username="" version=""><![CDATA[Danh sách các chuyên mục không hiện trên TopX, ID mỗi chuyên mục cách nhau bởi dấu ,]]></phrase>
+			<phrase name="setting_vtlai_topx_blackforum_title" date="0" username="" version=""><![CDATA[Black Forum ID]]></phrase>
+			<phrase name="setting_vtlai_topx_blackuser_desc" date="0" username="" version=""><![CDATA[Danh sách các UserID không hiện trên TopX, ID mỗi User cách nhau bởi dấu ,]]></phrase>
+			<phrase name="setting_vtlai_topx_blackuser_title" date="0" username="" version=""><![CDATA[Black User ID]]></phrase>
+			<phrase name="setting_vtlai_topx_reloadtime_desc" date="0" username="" version=""><![CDATA[Sau bao nhiêu giây thì TopX tự cập nhật lại]]></phrase>
+			<phrase name="setting_vtlai_topx_reloadtime_title" date="0" username="" version=""><![CDATA[Auto Reload Time]]></phrase>
+			<phrase name="setting_vtlai_topx_cachesystem_desc" date="0" username="" version=""><![CDATA[Bạn có muốn sử dụng cache không ?]]></phrase>
+			<phrase name="setting_vtlai_topx_cachesystem_title" date="0" username="" version=""><![CDATA[Cache system Enable]]></phrase>
+			<phrase name="setting_vtlai_topx_cachetime_desc" date="0" username="" version=""><![CDATA[Bạn muốn thời gian cache là bao nhiêu giây?]]></phrase>
+			<phrase name="setting_vtlai_topx_cachetime_title" date="0" username="" version=""><![CDATA[Cache Time]]></phrase>
+			<phrase name="setting_vtlai_topx_tabs_desc" date="0" username="" version=""><![CDATA[Danh sách các Tab và ID chuyên mục. Nhập theo cú pháp sau<br>Tên Tab 1|ID Box thứ nhất,ID Box thứ 2...<br>Tên Tab 2|ID Box thứ 3,ID Box thứ 4...<br><br>Có thể tạm không dùng 1 tab nào đó bằng cách đặt dấu # trước tên Tab.<br>VD:<br>#Tiêu đề|ID1,ID2,ID3]]></phrase>
+			<phrase name="setting_vtlai_topx_tabs_title" date="0" username="" version=""><![CDATA[Tab define]]></phrase>
+			<phrase name="setting_vtlai_topx_rightbox_enable_desc" date="0" username="" version=""><![CDATA[Bạn có muốn bật Box bên phải không]]></phrase>
+			<phrase name="setting_vtlai_topx_rightbox_enable_title" date="0" username="" version=""><![CDATA[RightBox Enable]]></phrase>
+			<phrase name="setting_vtlai_topx_rightbox_content_desc" date="0" username="" version=""><![CDATA[Nội dung box bên phải. Có thể dùng HTML.<br />Lưu ý: Muốn đổi chiều rộng khung bên phải, sửa file vtlai_css/vtlai_topx.css phần .vtlaitopx .largebanner]]></phrase>
+			<phrase name="setting_vtlai_topx_rightbox_content_title" date="0" username="" version=""><![CDATA[Rightbox Content]]></phrase>
+			<phrase name="setting_vtlai_topx_mobilestyleid_desc" date="0" username="" version=""><![CDATA[Nhập ID của giao diện sẽ sử dụng TopX ở dạng mobile<br /><b>Lưu ý:</b> <br />+ Chỉ nhập 1 styleid <br />+ Chắc chắn cuối navbar template tồn tại biến: {vb:raw ad_location.global_below_navbar}]]></phrase>
+			<phrase name="setting_vtlai_topx_mobilestyleid_title" date="0" username="" version=""><![CDATA[Mobile StyleID]]></phrase>
+			<phrase name="setting_vtlai_topx_mobile_count_desc" date="0" username="" version=""><![CDATA[Số bài mới sẽ hiện trên TopX dành cho giao diện mobile]]></phrase>
+			<phrase name="setting_vtlai_topx_mobile_count_title" date="0" username="" version=""><![CDATA[Mobile TopX Count]]></phrase>
+			<phrase name="settinggroup_vtlai_topx" date="0" username="" version=""><![CDATA[vt.Lai VBB TopX 4.3 by SinhVienIT.Net]]></phrase>
+		</phrasetype>
+	</phrases>
+	<options>
+		<settinggroup name="vtlai_topx" displayorder="2000">
+			<setting varname="vtlai_topx_title" displayorder="1">
+				<datatype>free</datatype>
+				<defaultvalue>Đang thảo luận</defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_count" displayorder="2">
+				<datatype>number</datatype>
+				<defaultvalue>12</defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_count_large" displayorder="3">
+				<datatype>number</datatype>
+				<defaultvalue>20</defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_blackforum" displayorder="4">
+				<datatype>free</datatype>
+				<defaultvalue></defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_blackuser" displayorder="5">
+				<datatype>free</datatype>
+				<defaultvalue></defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_reloadtime" displayorder="6">
+				<datatype>number</datatype>
+				<defaultvalue>60</defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_cachesystem" displayorder="10">
+				<datatype>number</datatype>
+				<optioncode>radio:piped
+0|Không cache
+1|File cache (CHMOD 707 cho thư mục ./vtlai_cache)</optioncode>
+				<defaultvalue>0</defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_cachetime" displayorder="11">
+				<datatype>number</datatype>
+				<defaultvalue>30</defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_tabs" displayorder="12">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue>Tab1 title|1,2,5
+Tab2 title|21,15,7
+Tab3 title|14</defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_rightbox_enable" displayorder="13">
+				<datatype>number</datatype>
+				<optioncode>yesno</optioncode>
+				<defaultvalue>1</defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_rightbox_content" displayorder="14">
+				<datatype>free</datatype>
+				<optioncode>textarea</optioncode>
+				<defaultvalue><![CDATA[Nhà tài trợ <br /> <br />
+	<img border="0" src="http://ads.sinhvienit.net/ads/300x250.png" />
+			]]></defaultvalue>
+			</setting>
+			<setting varname="vtlai_topx_mobilestyleid" displayorder="15">
+				<datatype>free</datatype>				
+			</setting>
+			<setting varname="vtlai_topx_mobile_count" displayorder="16">
+				<datatype>free</datatype>
+				<defaultvalue>15</defaultvalue>				
+			</setting>
+		</settinggroup>
+	</options>
+	<helptopics>
+	</helptopics>
+	<cronentries>
+	</cronentries>
+	<faqentries>
+	</faqentries>
+	<navigation>
+	</navigation>
+</product>
